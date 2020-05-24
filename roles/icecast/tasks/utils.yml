@@ -1,0 +1,5 @@
+---
+
+- name: skip icecast currently playing track
+  command: killall -SIGUSR1 ezstream
+  tags: utils-icecast-skip

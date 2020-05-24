@@ -1,0 +1,12 @@
+---
+
+- include: icecast.yml
+  become: yes
+  tags:
+    - icecast
+
+# ad-hoc tasks that are not run as part of the normal playbook run
+# these tasks will only run when their tag is explicitely specified
+- include: utils.yml
+  become: yes
+  tags: never

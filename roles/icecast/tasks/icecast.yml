@@ -1,0 +1,93 @@
+---
+
+##### PACKAGES #####
+- name: install icecast2 package
+  apt:
+    state: present
+    package:
+      - icecast2
+      - ezstream
+      - vorbis-tools
+
+##### CONFIGURATION #####
+
+- name: copy icecast2 configuration
+  template: src={{ item.src }} dest={{ item.dest }} owner={{ item.owner }} group={{ item.group }} mode=0660
+  notify: restart icecast
+  with_items:
+    - { src: "etc_icecast2_icecast.xml.j2", dest: "/etc/icecast2/icecast.xml", owner: "root", group: "icecast", mode: "0640" }
+    - { src: "etc_default_icecast2.j2", dest: "/etc/default/icecast2", owner: "root", group: "root", mode: "0600" }
+
+- name: copy ezstream systemd service file
+  template: src="etc_systemd_system_ezstream.service.j2" dest="/etc/systemd/system/ezstream.service" mode="0644"
+  register: ezstream_systemd_service
+  notify:
+    - reload systemd unit files
+    - restart icecast
+
+- name: copy ezstream configuration
+  template: src="etc_icecast2_ezstream.xml.j2" dest="/etc/icecast2/ezstream.xml" mode="0644" owner="root" group="icecast" mode="0644"
+  notify: restart icecast
+
+##### DOWNLOADS - none #####
+##### MYSQL - none #####
+##### FAIL2BAN - none (handled by apache basic auth)
+##### BACKUPS - TODO ####
+##### FILE PERMISSIONS - none #####
+
+##### APACHE #####
+
+- name: load apache2 proxy/proxy_http modules
+  command: a2enmod {{ item }}
+  with_items:
+    - proxy
+    - proxy_http
+  args:
+    creates: /etc/apache2/mods-enabled/{{ item }}.load
+  notify: restart apache
+
+- name: copy apache2 icecast redirect/reverseproxy config
+  copy: src=etc_apache2_conf-available_icecast.conf dest=/etc/apache2/conf-available/icecast.conf
+  notify: reload apache
+
+- name: create icecast directory alias for apache2
+  file: state=directory path=/var/www/icecast
+
+- name: enable apache2 transmission redirect/reverseproxy
+  command: a2enconf icecast
+  args:
+    creates: "/etc/apache2/conf-enabled/icecast.conf"
+  notify: reload apache
+
+##### PLAYLIST #####
+
+- name: create default ezstream local playlist storage directory
+  file: path=/var/lib/icecast/playlist state=directory owner={{ ansible_ssh_user }} group=icecast mode=02750
+
+- name: update ezstream playlist from audio files in playlist directory
+  shell: >
+         find /var/lib/icecast/playlist/
+         -type f -iname "*.ogg" -o -iname "*.flac" -o -iname "*.mp3" -o -iname "*.opus" -o -iname "*.webm" |
+         tee /etc/icecast2/playlist.m3u
+  notify: restart icecast
+
+- name: create symlink to ezstream playlist directory in main users home
+  file: state=link src=/var/lib/icecast/playlist/ dest="/home/{{ ansible_ssh_user }}/PLAYLIST"
+
+##### SERVICE #####
+
+- name: disable icecast now
+  service: name={{ item }} state=stopped enabled=no
+  when: not icecast_enable_service
+  with_items:
+    - icecast2
+    - ezstream
+  tags: services
+
+- name: enable icecast now
+  service: name={{ item }} state=started enabled=yes
+  when: icecast_enable_service
+  with_items:
+    - icecast2
+    - ezstream
+  tags: services

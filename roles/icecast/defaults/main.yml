@@ -1,0 +1,24 @@
+---
+
+######## ICECAST AUDIO STREAMING SERVER #####
+
+# password required to send a stream to the icecast server.
+icecast_source_password: "{{ default_services_password | default(lookup('password', secrets_path + '/' + inventory_hostname + '.icecast_source_password length=15')) }}"
+
+# yes/no: start/stop the icecast media streaming server, enable/disable it on boot
+icecast_enable_service: yes
+
+# output OGG stream bitrate (in kB/s)
+icecast_bitrate: '128'
+
+# icecast stream metadata Name
+icecast_info_name: '{{ inventory_hostname }}'
+# icecast stream metadata Homepage/URL
+icecast_info_url: 'https://{{ inventory_hostname }}'
+
+# username/password for web interface administration. Unused but must be set
+icecast_admin_username: "{{ lookup('password', secrets_path + '/' + inventory_hostname + '.icecast_admin_username length=15') }}"
+icecast_admin_password: "{{ lookup('password', secrets_path + '/' + inventory_hostname + '.icecast_admin_password length=15') }}"
+
+# Password to connect an icecast relay. Unused but must be set
+icecast_relay_password: "{{ lookup('password', secrets_path + '/' + inventory_hostname + '.icecast_relay_password length=15') }}"
