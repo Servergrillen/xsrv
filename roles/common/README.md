@@ -13,6 +13,7 @@ This role will install/configure a basic Debian-based server:
 - firewall (`firehol`)
 - intrusion/bruteforce detection and prevention system (`fail2ban`)
 - outgoing mail through an external SMTP relay (`msmtp`)
+- `auditd`/Linux Audit Framework
 - basic command-line utilities/diagnostic tools
 - streamlining/removal of unwanted packages
 - `haveged` random number generator/entropy source for virtual machines
