@@ -143,3 +143,8 @@
   service: name=apache2 state=stopped enabled=no
   when: not apache_enable_service|bool
   tags: services
+
+##### ANSIBLE USER #####
+
+- name: add/remove the ansible user to/from the www-data group
+  
