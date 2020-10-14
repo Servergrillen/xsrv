@@ -72,7 +72,7 @@ function init_venv() {
     if [[ ! "$skip_venv" == "yes" ]]; then
         echo "[xsrv] INFO: installing ansible in $venv_dir"
         pip3 install wheel
-        pip3 install cryptography==3.3.2 ansible=="$ansible_version"
+        pip3 install ansible==2.10.3 mitogen
     fi
 }
 
