@@ -1,0 +1,55 @@
+# list of libvirt networks
+# see https://libvirt.org/formatnetwork.html and https://docs.ansible.com/ansible/latest/collections/community/libvirt/virt_net_module.html
+# required attributes: name, mac_address, bridge_name, ip_address, netmask, dhcp_start, dhcp_end, autostart, state
+# optional attributes: forward_dev (NAT device), dhcp_start/end (DHCP range)
+# Example:
+# libvirt_networks:
+#  - name: default
+#    mac_address: "52:54:00:4f:b1:01"
+#    forward_dev: "eth0"
+#    bridge_name: "virbr2"
+#    ip_address: "10.0.100.1"
+#    netmask: "255.255.255.0"
+#    dhcp_start: "10.0.100.128"
+#    dhcp_end: "10.0.100.254"
+#    autostart: yes # optional, default yes
+#    state: active # optional, default active
+libvirt_networks: []
+
+# list of libvirt storage pools
+# See TODO and TODO
+# Example:
+# libvirt_storage_pools:
+#  - name: pool0
+#    path: /var/lib/libvirt/pools/pool0
+#    mode: "0750" # optional, QUOTED default 0750
+#    owner_uid: "1003" # optional, QUOTED default 0 (root)
+#    group_gid: "1003" # optional, QUOTED default 0 (root)
+#    autostart: yes # optional, default yes
+#    state: inactive # optional, default active
+libvirt_storage_pools: []
+
+
+# list of libvirt VMs
+# https://libvirt.org/formatdomain.html
+# https://docs.ansible.com/ansible/latest/collections/community/libvirt/virt_module.html
+# https://manpages.debian.org/virsh
+# required attributes: name, mem_mb, vcpu, disk_file, autostart, mac_address, network
+# to delete a VM, set its state: to 'absent', and optionally one of the following attributes (yes/no): remove_all_storage, delete_snapshots
+# Example:
+# libvirt_vms:
+#  - name: 01.xlx.lan
+#    mem_mb: 128
+#    vcpu: 1
+#    disk_file: '01.xlx.lan.qcow2'
+#    autostart: yes
+#    mac_address: '52:54:00:5d:41:01'
+#    network: 'default'
+#    autostart: yes # optional, default yes
+#  - name: remove-this-vm
+#    state: absent
+#    remove_all_storage: yes
+libvirt_vms: []
+
+
+libvirt_parallel_shutdown_number: 3

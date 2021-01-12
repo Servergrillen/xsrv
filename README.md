@@ -39,7 +39,7 @@
 - [homepage](roles/homepage) - simple homepage/dashboard for your services
 - [gotty](roles/gotty) - access a server terminal as a web application
 - [proxmox](roles/gotty) - basic setup for Proxmox VE hypervisors
-
+- [libvirt](roles/libvirt) - manage virtual machines, storage and network (KVM hypervisor)
 
 ## Quick start
 

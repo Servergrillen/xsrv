@@ -39,6 +39,7 @@
 - [homepage](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/homepage) - simple homepage/dashboard for your services
 - [gotty](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gotty) - access a server terminal as a web application
 - [proxmox](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/gotty) - basic setup for Proxmox VE hypervisors
+ [libvirt](https://gitlab.com/nodiscc/xsrv/-/tree/master/roles/libvirt) - manage virtual machines, storage and network (KVM hypervisor)
 
 
 ## Quick start
