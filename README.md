@@ -39,6 +39,7 @@
 - [homepage](roles/homepage) - simple homepage/dashboard for your services
 - [gotty](roles/gotty) - access a server terminal as a web application
 - [proxmox](roles/gotty) - basic setup for Proxmox VE hypervisors
+- [autoreadme](roles/autoreadme) - automatic README.md for your playbook (inventory/information/links/monitoring badges...)
 
 
 ## Quick start
