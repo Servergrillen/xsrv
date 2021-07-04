@@ -1,10 +1,8 @@
 # Usage
 
-`xsrv` is a wrapper around the [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) suite of tools.
+`xsrv` is a wrapper around the [ansible](https://en.wikipedia.org/wiki/Ansible_%28software%29) command-line tools.
 
-Server ([host](installation/server-preparation.md)) configuration is stored in the `~/playbooks/` directory on the [controller](installation/controller-preparation.md) in [YAML](https://en.wikipedia.org/wiki/YAML) files.
-
-To [enable components or change server configuration](#changing-configuration), edit the relevant YAML configuration file, then apply changes using `xsrv deploy`.
+[Hosts](installation/server-preparation.md)) (servers) configuration is stored in the `~/playbooks/` directory on the [controller](installation/controller-preparation.md) as [YAML](https://en.wikipedia.org/wiki/YAML) files. To [enable components or change configuration](#changing-configuration), edit the relevant configuration file, then apply changes using `xsrv deploy`.
 
 
 ------------------------
