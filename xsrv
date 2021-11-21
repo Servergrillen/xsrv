@@ -54,10 +54,10 @@ function check_group_name() {
         group_name="all"
     fi
     group_vars_file="$projects_dir/$project_name/group_vars/$group_name.yml"
-    group_vault_file="$playbooks_dir/$playbook_name/group_vars/$group_name.vault.yml"
     if [[ ! -f "$group_vars_file" ]]; then
         echo "[xsrv] INFO: $group_vars_file does not exist, will be created";
     fi
+    group_vault_file="$projects_dir/$project_name/group_vars/$group_name.vault.yml"
     if [[ ! -f "$group_vault_file" ]]; then
         echo "[xsrv] INFO: $group_vault_file does not exist, will be created";
     fi
@@ -181,9 +181,9 @@ function edit_group() {
 function edit_group_vault() {
     # edit a host's vault file
     check_group_name
-    echo "[xsrv] INFO: opening group_vars file $group_vars_file"
-    cd "$playbooks_dir/$playbook_name"
-    EDITOR="$editor" ansible-vault edit "$host_vault_file"
+    echo "[xsrv] INFO: opening group_vars file $group_vault_file"
+    cd "$projects_dir/$project_name"
+    EDITOR="$editor" ansible-vault edit "$group_vault_file"
 }
 
 function edit_vault() {
